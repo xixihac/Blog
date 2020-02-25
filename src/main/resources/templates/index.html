@@ -64,7 +64,7 @@
                     <p class="text-desc">观看数66·点赞数88·1小时前</p>
                 </div>
             </div>
-            <div class="media" th:each="question:${questions}">
+            <div class="media" th:each="question:${questions.questionDTOS}">
                 <div class="media-left">
                     <a href="#">
                         <img class="media-object img-circle" width="40px" th:src="${question.user.avatarUrl}" >
@@ -76,10 +76,37 @@
                     <p class="text-desc" th:text="'浏览数'+${question.viewCount}+'·点赞数'+${question.likeCount}+'·时间'+${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm:ss')}"></p>
                 </div>
             </div>
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li th:if="${questions.showFirstPage}">
+                        <a href="/?page=1" aria-label="Previous">
+                            <span aria-hidden="true">&lt;&lt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${questions.showPrevious}">
+                        <a th:href="@{/(page=${pageId}-1)}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+                    <li th:each="page:${questions.pages}" th:class="${pageId==page}?'active':''">
+                        <a th:href="@{/(page=${page})}" name="page" th:text="${page}">1</a>
+                    </li>
+                    <li th:if="${questions.showNext}">
+                        <a th:href="@{/(page=${pageId+1})}" aria-label="Previous">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${questions.showEndPage}">
+                        <a th:href="@{/(page=${questions.totalPage})}" aria-label="Next">
+                            <span aria-hidden="true">&gt;&gt;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" >
             <h3>热门话题</h3>
-            这是热门话题的内容
+            这是热门话题的内容+++++
         </div>
 
     </div>
