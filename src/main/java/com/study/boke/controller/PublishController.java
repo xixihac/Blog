@@ -22,6 +22,8 @@ public class PublishController {
     @Autowired
     QuestionMapper questionMapper;
 
+
+
     @GetMapping("/publish")
     public String publish(){
         return "publish";

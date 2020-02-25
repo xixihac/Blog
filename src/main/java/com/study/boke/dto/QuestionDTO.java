@@ -1,9 +1,10 @@
-package com.study.boke.model;
+package com.study.boke.dto;
 
+import com.study.boke.model.User;
 import lombok.Data;
 
 @Data
-public class Question {
+public class QuestionDTO {
     private Integer id;
     private String title;
     private String description;
@@ -14,6 +15,5 @@ public class Question {
     private Integer commentCount;
     private Integer viewCount;
     private Integer likeCount;
-
-
+    private User user;
 }

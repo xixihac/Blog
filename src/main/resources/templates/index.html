@@ -5,6 +5,7 @@
     <title>Title</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/boke.css">
     <script type="text/javascript" src="/js/jquery-3.4.1.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
 
@@ -32,6 +33,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/publish">发起</a></li>
                 <li th:if="${session.githubUser}==null"><a href="https://github.com/login/oauth/authorize?client_id=b1af92b9b2cdc49475d5&redirect_uri=http://localhost:8080/callback&scope=user&state=1">登录</a></li>
+                <li><img th:if="${session.githubUser} != null" width="50px" th:src="${session.githubUser.avatarUrl}"></li>
                 <li class="dropdown" th:if="${session.githubUser} != null">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${session.githubUser.getName()}">我<span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -40,9 +42,47 @@
                         <li><a href="#">退出登录</a></li>
                     </ul>
                 </li>
+
             </ul>
         </div>
     </div>
 </nav>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" >
+            <h2><span class="glyphicon glyphicon-list" aria-hidden="true"></span>发现</h2>
+            <hr>
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object img-circle" width="40px" src="https://avatars2.githubusercontent.com/u/60062767?s=400&u=d4fa9a0f5f4da6de80a67e2504829611744130a2&v=4" >
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">如何学习搭建博客</h4>
+                    这里是博客内容哈哈哈哈<br>
+                    <p class="text-desc">观看数66·点赞数88·1小时前</p>
+                </div>
+            </div>
+            <div class="media" th:each="question:${questions}">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object img-circle" width="40px" th:src="${question.user.avatarUrl}" >
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading" th:text="${question.title}"></h4>
+                    <p th:text="${question.description}"></p><br>
+                    <p class="text-desc" th:text="'浏览数'+${question.viewCount}+'·点赞数'+${question.likeCount}+'·时间'+${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm:ss')}"></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" >
+            <h3>热门话题</h3>
+            这是热门话题的内容
+        </div>
+
+    </div>
+</div>
 </body>
 </html>
