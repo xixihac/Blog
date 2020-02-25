@@ -17,17 +17,20 @@ public class HelloController {
     @GetMapping("/")
     public String hello(HttpServletRequest request){
         Cookie[] cookies = request.getCookies();
-        System.out.println(cookies);
+        User user = null;
         if (cookies!=null){
             for(Cookie token:cookies){
                 if ("token".equals(token.getName())){
-                    User user = userMapper.findByCookie(token.getValue());
+                    user = userMapper.findByCookie(token.getValue());
                     System.out.println(user);
                     request.getSession().setAttribute("githubUser",user);
                 }
             }
         }
 
+        if (user == null){
+            return "index";
+        }
 
         return "index";
     }
