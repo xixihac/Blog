@@ -18,26 +18,14 @@
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" >
             <h2><span class="glyphicon glyphicon-list" aria-hidden="true"></span>发现</h2>
             <hr>
-            <div class="media">
-                <div class="media-left">
-                    <a href="#">
-                        <img class="media-object img-circle" width="40px" src="https://avatars2.githubusercontent.com/u/60062767?s=400&u=d4fa9a0f5f4da6de80a67e2504829611744130a2&v=4" >
-                    </a>
-                </div>
-                <div class="media-body">
-                    <h4 class="media-heading">如何学习搭建博客</h4>
-                    这里是博客内容哈哈哈哈<br>
-                    <p class="text-desc">观看数66·点赞数88·1小时前</p>
-                </div>
-            </div>
             <div class="media" th:each="question:${questions.questionDTOS}">
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object img-circle" width="40px" th:src="${question.user.avatarUrl}" >
+                        <img class="media-object img-rounded" width="40px" th:src="${question.user.avatarUrl}" >
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" th:text="${question.title}"></h4>
+                    <h4 class="media-heading" ><a th:text="${question.title}" th:href="@{/question/}+${question.id}"></a></h4>
                     <p th:text="${question.description}"></p><br>
                     <p class="text-desc" th:text="'浏览数'+${question.viewCount}+'·点赞数'+${question.likeCount}+'·时间'+${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm:ss')}"></p>
                 </div>

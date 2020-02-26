@@ -19,15 +19,14 @@ public class HelloController {
     QuestionService questionService;
 
     @GetMapping("/")
-    public String hello(HttpServletRequest request,
-                        Model model,
-                        @RequestParam(name = "page",defaultValue = "1") Integer page,
-                        @RequestParam(name = "size",defaultValue = "1") Integer size){
+    public String hello(Model model,
+                        @RequestParam(name = "page", defaultValue = "1") Integer page,
+                        @RequestParam(name = "size", defaultValue = "5") Integer size) {
 
 
-        PaginationDTO questionDTOList = questionService.list(page,size);
-        model.addAttribute("pageId",page);
-        model.addAttribute("questions",questionDTOList);
+        PaginationDTO questionDTOList = questionService.list(page, size);
+        model.addAttribute("pageId", page);
+        model.addAttribute("questions", questionDTOList);
 
 //        if (user == null){
 //            return "index";

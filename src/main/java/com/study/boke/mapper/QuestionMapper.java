@@ -1,5 +1,6 @@
 package com.study.boke.mapper;
 
+import com.study.boke.dto.QuestionDTO;
 import com.study.boke.model.Question;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -24,4 +25,10 @@ public interface QuestionMapper {
 
     @Select("select count(1) from question where creator=#{id}")
     Integer countForId(Integer id);
+
+    @Select("select * from question where id=#{id}")
+    Question listForQuestionId(Integer id);
+
+
+
 }

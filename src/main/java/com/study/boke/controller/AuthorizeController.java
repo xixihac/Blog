@@ -5,6 +5,7 @@ import com.study.boke.dto.GithubUser;
 import com.study.boke.mapper.UserMapper;
 import com.study.boke.model.User;
 import com.study.boke.provider.GithubProvider;
+import com.study.boke.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -27,8 +28,10 @@ public class AuthorizeController {
     private String client_secret;
     @Value("${github.redirect.uri}")
     private String redirect_uri;
+
     @Autowired
-    private UserMapper userMapper;
+    UserService userService;
+
 
     @GetMapping("/callback")
     public String callback(@RequestParam("code") String code,
@@ -44,7 +47,7 @@ public class AuthorizeController {
         String tokenDTO = githubProvider.getAccessTokenDTO(accessTokenDTO);
         GithubUser githubUser = githubProvider.getUser(tokenDTO);
         if(githubUser!=null){
-            //登录成功
+            //登录github成功
             User user = new User();
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setName(githubUser.getName());
@@ -53,9 +56,9 @@ public class AuthorizeController {
             user.setToken(token);
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
-            userMapper.insert(user);
-            response.addCookie(new Cookie("token",token));
+            userService.createOrUpdate(user);
 
+            response.addCookie(new Cookie("token",token));
 
             request.getSession().setAttribute("githubUser",githubUser);
             return "redirect:/";

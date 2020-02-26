@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/boke.css">
+    <script type="text/javascript" src="/js/jquery-3.4.1.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+<div th:insert="side :: topside"></div>
+<div class="container-fluid main profile">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h2><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>[[${question.title}]]</h2>
+            <span class="text-desc" th:text="'作者:'+${question.user.name}"></span>
+            <span class="text-desc" th:text="'|浏览数:'+${question.viewCount}"></span>
+            <span class="text-desc" th:text="'|点赞数:'+${question.likeCount}"></span>
+            <span class="text-desc" th:text="'|时间:'+${#dates.format(question.gmtCreate,'yyyy-MM-dd')}"></span>
+            <hr>
+            <div>[[${question.description}]]</div>
+            <hr>
+            <div class="text-desc" th:if="${session.githubUser}"><a href="#" th:if="${session.githubUser.id==question.user.id}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>编辑</a></div>
+            <hr>
+
+
+
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <div class="list-group section">
+                <h3>发起人</h3>
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object img-circle" width="40px" th:src="${question.user.avatarUrl}">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4><a href="#" th:text="${question.user.name}"></a></h4>
+                    </div>
+                </div>
+                <hr>
+                <h4>相关问题</h4>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

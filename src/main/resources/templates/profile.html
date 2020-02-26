@@ -23,11 +23,11 @@
             <div class="media" th:each="question:${questions.questionDTOS}">
                 <div class="media-left">
                     <a href="#">
-                        <img class="media-object img-circle" width="40px" th:src="${question.user.avatarUrl}">
+                        <img class="media-object img-rounded" width="40px" th:src="${question.user.avatarUrl}">
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" th:text="${question.title}"></h4>
+                    <h4 class="media-heading" ><a th:href="@{/question/}+${question.id}" th:text="${question.title}"></a></h4>
                     <p th:text="${question.description}"></p><br>
                     <p class="text-desc"
                        th:text="'浏览数'+${question.viewCount}+'·点赞数'+${question.likeCount}+'·时间'+${#dates.format(question.gmtCreate,'yyyy-MM-dd HH:mm:ss')}"></p>

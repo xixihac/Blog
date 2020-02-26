@@ -27,4 +27,21 @@ public class UserService {
         }
         return user;
     }
+
+    public void createOrUpdate(User user) {
+        User accountIdUser = userMapper.getByAccountId(user.getAccountId());
+        if(accountIdUser == null){
+            //用户为新用户  添加
+            userMapper.insert(user);
+        }else {
+            //用户为老用户 更新
+            accountIdUser.setName(user.getName());
+            accountIdUser.setAvatarUrl(user.getAvatarUrl());
+            accountIdUser.setToken(user.getToken());
+            accountIdUser.setGmtModified(System.currentTimeMillis());
+            userMapper.update(accountIdUser);
+
+        }
+
+    }
 }
