@@ -23,6 +23,9 @@ public class PaginationDTO {
         }else{
             totalPage = totalCount / size + 1;
         }
+        if(totalPage==0){
+            totalPage=1;
+        }
         this.totalPage=totalPage;
 
 
