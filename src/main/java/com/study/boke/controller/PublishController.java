@@ -33,8 +33,7 @@ public class PublishController {
             @RequestParam String description,
             @RequestParam String tag,
             HttpServletRequest request,
-            Model model
-    ){
+            Model model){
         model.addAttribute("title",title);
         model.addAttribute("description",description);
         model.addAttribute("tag",tag);
@@ -52,7 +51,7 @@ public class PublishController {
             return "publish";
         }
 
-        User user = userService.UserExist(request);
+        User user = (User) request.getSession().getAttribute("githubUser");
 
         if (user == null){
             model.addAttribute("error","用户未登录");

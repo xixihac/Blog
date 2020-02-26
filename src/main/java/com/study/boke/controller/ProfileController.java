@@ -28,7 +28,8 @@ public class ProfileController {
                           HttpServletRequest request,
                           @RequestParam(name = "page",defaultValue = "1") Integer page,
                           @RequestParam(name = "size",defaultValue = "1") Integer size) {
-        User user = userService.UserExist(request);
+
+        User user = (User) request.getSession().getAttribute("githubUser");
         if (user == null) {
             return "redirect:/";
         }

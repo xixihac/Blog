@@ -25,8 +25,6 @@ public class HelloController {
                         @RequestParam(name = "size",defaultValue = "1") Integer size){
 
 
-        userService.UserExist(request);
-
         PaginationDTO questionDTOList = questionService.list(page,size);
         model.addAttribute("pageId",page);
         model.addAttribute("questions",questionDTOList);
