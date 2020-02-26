@@ -3,11 +3,13 @@ package com.study.boke.controller;
 import com.study.boke.mapper.QuestionMapper;
 import com.study.boke.model.Question;
 import com.study.boke.model.User;
+import com.study.boke.service.QuestionService;
 import com.study.boke.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -18,6 +20,9 @@ public class PublishController {
 
     @Autowired
     QuestionMapper questionMapper;
+
+    @Autowired
+    QuestionService questionService;
 
     @Autowired
     UserService userService;
@@ -32,8 +37,11 @@ public class PublishController {
             @RequestParam String title,
             @RequestParam String description,
             @RequestParam String tag,
+            @RequestParam Integer id,
             HttpServletRequest request,
             Model model){
+
+        model.addAttribute("id",id);
         model.addAttribute("title",title);
         model.addAttribute("description",description);
         model.addAttribute("tag",tag);
@@ -55,18 +63,31 @@ public class PublishController {
 
         if (user == null){
             model.addAttribute("error","用户未登录");
-            System.out.println("user为空");
             return "publish";
         }
         Question question = new Question();
+        question.setId(id);
         question.setTitle(title);
         question.setDescription(description);
         question.setTag(tag);
         question.setCreator(user.getId());
         question.setGmtCreate(System.currentTimeMillis());
         question.setGmtModified(question.getGmtCreate());
-        questionMapper.create(question);
+        questionService.createOrUpdate(question);
 
         return "redirect:/";
+    }
+
+    @GetMapping("/publish/{questionId}")
+    public String edit(@PathVariable("questionId") Integer questionId,
+                       Model model){
+
+        Question question = questionMapper.listForQuestionId(questionId);
+        model.addAttribute("id",questionId);
+        model.addAttribute("title",question.getTitle());
+        model.addAttribute("description",question.getDescription());
+        model.addAttribute("tag",question.getTag());
+
+        return "publish";
     }
 }

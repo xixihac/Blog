@@ -17,7 +17,7 @@ public class QuestionControoler {
     @GetMapping("/question/{id}")
     public String question(Model model,
                            @PathVariable("id")Integer id){
-        QuestionDTO questionDTO = questionService.listForQuetionId(id);
+        QuestionDTO questionDTO = questionService.listForQuestionId(id);
 
         model.addAttribute("question",questionDTO);
         return "question";

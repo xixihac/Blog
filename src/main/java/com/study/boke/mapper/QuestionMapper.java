@@ -5,6 +5,7 @@ import com.study.boke.model.Question;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -30,5 +31,6 @@ public interface QuestionMapper {
     Question listForQuestionId(Integer id);
 
 
-
+    @Update("update question set title=#{title},description=#{description},tag=#{tag},gmt_modified=#{gmtModified} where id=#{id}")
+    void update(Question idQuestion);
 }

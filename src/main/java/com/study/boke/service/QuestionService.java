@@ -65,7 +65,7 @@ public class QuestionService {
         return paginationDTO;
     }
 
-    public QuestionDTO listForQuetionId(Integer id) {
+    public QuestionDTO listForQuestionId(Integer id) {
 
         Question question = questionMapper.listForQuestionId(id);
         User user = userMapper.getById(question.getCreator());
@@ -74,5 +74,21 @@ public class QuestionService {
         questionDTO.setUser(user);
         return questionDTO;
 
+    }
+
+    public void createOrUpdate(Question question){
+        if (question.getId()==null){
+            //新问题  添加
+            questionMapper.create(question);
+        }else {
+            Question idQuestion = questionMapper.listForQuestionId(question.getId());
+            //老问题 更新
+            idQuestion.setTitle(question.getTitle());
+            idQuestion.setDescription(question.getDescription());
+            idQuestion.setTag(question.getTag());
+            idQuestion.setGmtModified(System.currentTimeMillis());
+            questionMapper.update(idQuestion);
+
+        }
     }
 }
