@@ -2,6 +2,7 @@ package com.study.boke.controller;
 
 import com.study.boke.mapper.QuestionMapper;
 import com.study.boke.model.Question;
+import com.study.boke.model.QuestionExample;
 import com.study.boke.model.User;
 import com.study.boke.service.QuestionService;
 import com.study.boke.service.UserService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class PublishController {
@@ -82,7 +84,9 @@ public class PublishController {
     public String edit(@PathVariable("questionId") Integer questionId,
                        Model model){
 
-        Question question = questionMapper.listForQuestionId(questionId);
+
+        Question question = questionMapper.selectByPrimaryKey(questionId);
+
         model.addAttribute("id",questionId);
         model.addAttribute("title",question.getTitle());
         model.addAttribute("description",question.getDescription());

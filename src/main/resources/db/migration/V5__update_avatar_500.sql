@@ -1,0 +1,1 @@
+alter table user MODIFY avatar_url VARCHAR(500);
