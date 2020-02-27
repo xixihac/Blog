@@ -1,5 +1,7 @@
 package com.study.boke.controller;
 
+import com.study.boke.Exception.AllException;
+import com.study.boke.Exception.BokeCustomerException;
 import com.study.boke.mapper.QuestionMapper;
 import com.study.boke.model.Question;
 import com.study.boke.model.QuestionExample;
@@ -30,7 +32,12 @@ public class PublishController {
     UserService userService;
 
     @GetMapping("/publish")
-    public String publish(){
+    public String publish(HttpServletRequest request){
+        User githubUser = (User) request.getSession().getAttribute("githubUser");
+
+        if(githubUser == null){
+            throw new BokeCustomerException(AllException.HAVE_NO_POWER);
+        }
         return "publish";
     }
 
@@ -42,6 +49,11 @@ public class PublishController {
             @RequestParam Integer id,
             HttpServletRequest request,
             Model model){
+
+//        User githubUser = (User) request.getSession().getAttribute("githubUser");
+//        if( githubUser != null && !id.equals(githubUser.getId())){
+//            throw new BokeCustomerException(AllException.HAVE_NO_POWER);
+//        }
 
         model.addAttribute("id",id);
         model.addAttribute("title",title);
@@ -67,6 +79,15 @@ public class PublishController {
             model.addAttribute("error","用户未登录");
             return "publish";
         }
+
+        if ( id!=null ){
+            Integer creator = questionMapper.selectByPrimaryKey(id).getCreator();
+            if (!creator.equals(user.getId())){
+                throw new BokeCustomerException(AllException.HAVE_NO_POWER);
+            }
+
+        }
+
         Question question = new Question();
         question.setId(id);
         question.setTitle(title);

@@ -89,6 +89,9 @@ public class QuestionService {
     public void createOrUpdate(Question question){
         if (question.getId()==null){
             //新问题  添加
+            question.setCommentCount(0);
+            question.setViewCount(0);
+            question.setLikeCount(0);
             questionMapper.insert(question);
 
         }else {
