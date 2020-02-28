@@ -1,5 +1,7 @@
 package com.study.boke.controller;
 
+import com.study.boke.Exception.AllException;
+import com.study.boke.Exception.BokeCustomerException;
 import com.study.boke.dto.PaginationDTO;
 import com.study.boke.service.QuestionService;
 import com.study.boke.service.UserService;
@@ -25,6 +27,9 @@ public class HelloController {
 
 
         PaginationDTO questionDTOList = questionService.list(page, size);
+        if (page>questionDTOList.getTotalPage() || page < 1 ){
+            throw new BokeCustomerException(AllException.HAVE_NO_PAGE);
+        }
         model.addAttribute("pageId", page);
         model.addAttribute("questions", questionDTOList);
 

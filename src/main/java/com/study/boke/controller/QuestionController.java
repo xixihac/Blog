@@ -17,6 +17,7 @@ public class QuestionController {
     @Autowired
     QuestionService questionService;
 
+
     @GetMapping("/question/{id}")
     public String question(Model model,
                            @PathVariable("id")Integer id){
@@ -29,6 +30,8 @@ public class QuestionController {
         }
 
         model.addAttribute("question",questionDTO);
+
+        questionService.incView(questionDTO.getId());
         return "question";
     }
 }

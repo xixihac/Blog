@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="/css/boke.css">
     <script type="text/javascript" src="/js/jquery-3.4.1.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/boke.js" th:inline="javascript"></script>
+
 
 </head>
 <body>
@@ -24,9 +26,29 @@
             <hr>
             <div>[[${question.description}]]</div>
             <hr>
-            <div class="text-desc" th:if="${session.githubUser}"><a th:href="@{/publish/}+${question.id}" th:if="${session.githubUser.id==question.user.id}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>编辑</a></div>
+            <div class="text-desc" th:if="${session.githubUser}"><a th:href="@{/publish/}+${question.id}"
+                                                                    th:if="${session.githubUser.id==question.user.id}"><span
+                    class="glyphicon glyphicon-pencil" aria-hidden="true"></span>编辑</a></div>
             <hr>
 
+            <div id="reply-square">
+                <div class="media">
+                    <div class="media-left">
+                        <img class="media-object img-rounded" width="40px" th:src="${session.githubUser.avatarUrl}">
+                    </div>
+                    <div class="media-body">
+                        <h4 th:text="${session.githubUser.name}"></h4>
+                    </div>
+                </div>
+                <div class="form-group">
+                <textarea name="description" id="context" class="form-control comment-reply" cols="30"
+                          rows="10"></textarea>
+
+                    <input type="hidden" id="parentId" th:value="${question.id}">
+                    <input type="hidden" id="commentator" th:value="${session.githubUser.id}">
+                    <button type="submit" class="btn btn-success btn-publish" onclick="reply()">回复</button>
+                </div>
+            </div>
 
 
         </div>

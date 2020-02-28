@@ -48,7 +48,7 @@
         <div class="media-body">
             <h4 class="media-heading" ><a th:text="${question.title}" th:href="@{/question/}+${question.id}"></a></h4>
             <p th:text="${question.description}"></p><br>
-            <p class="text-desc" th:text="'浏览数'+${question.viewCount}+'·点赞数'+${question.likeCount}+'·时间'+${#dates.format(question.gmtModified,'yyyy-MM-dd HH:mm:ss')}"></p>
+            <p class="text-desc" th:text="'浏览数'+${question.viewCount}+'|点赞数'+${question.likeCount}+'|时间'+${#dates.format(question.gmtModified,'yyyy-MM-dd HH:mm:ss')}"></p>
         </div>
     </div>
 

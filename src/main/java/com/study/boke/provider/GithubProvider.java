@@ -1,6 +1,8 @@
 package com.study.boke.provider;
 
 import com.alibaba.fastjson.JSON;
+import com.study.boke.Exception.AllException;
+import com.study.boke.Exception.BokeCustomerException;
 import com.study.boke.dto.AccessTokenDTO;
 import com.study.boke.dto.GithubUser;
 import okhttp3.*;
@@ -48,9 +50,7 @@ public class GithubProvider {
             GithubUser user = JSON.parseObject(string, GithubUser.class);
             return user;
         } catch (IOException e) {
-            System.out.println("这里出错了");
-            e.printStackTrace();
+            throw new BokeCustomerException(AllException.GITHUB_CONNECT_FAILD);
         }
-        return null;
     }
 }

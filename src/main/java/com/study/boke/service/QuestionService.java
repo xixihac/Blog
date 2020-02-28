@@ -3,6 +3,7 @@ package com.study.boke.service;
 import com.study.boke.dto.PaginationDTO;
 import com.study.boke.dto.QuestionDTO;
 import com.study.boke.mapper.QuestionMapper;
+import com.study.boke.mapper.QuestionMapperExt;
 import com.study.boke.mapper.UserMapper;
 import com.study.boke.model.Question;
 import com.study.boke.model.QuestionExample;
@@ -23,6 +24,9 @@ public class QuestionService {
 
     @Autowired
     private QuestionMapper questionMapper;
+
+    @Autowired
+    private QuestionMapperExt questionMapperExt;
 
     public PaginationDTO list(Integer page, Integer size){
         Integer offset = size*(page-1);
@@ -108,5 +112,20 @@ public class QuestionService {
             questionMapper.updateByExampleSelective(idQuestion, questionExample);
 
         }
+    }
+
+    public void incView(Integer id) {
+        questionMapperExt.incView(id);
+    }
+    public void incComment(Integer id) {
+        questionMapperExt.incComment(id);
+    }
+
+    public Boolean isIdNull(Integer parentId) {
+        Question question = questionMapper.selectByPrimaryKey(parentId);
+        if (question == null){
+            return true;
+        }
+        return false;
     }
 }
