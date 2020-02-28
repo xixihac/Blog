@@ -24,3 +24,18 @@ body {
     margin: 10px 0;
 }
 
+.reply-time {
+    float: right;
+}
+.reply .icon{
+    margin: 5px;
+    cursor: pointer;
+}
+.reply .icon:hover{
+    color: blue;
+}
+.comment2reply {
+    width: 700px;
+}
+
+
