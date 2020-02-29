@@ -25,6 +25,7 @@ function reply() {
         success: function (response) {
             if (response.code == 200) {
                 $("#context").val("");
+                $("<div>我是子元素</div>").appendTo($("#fu"));
             } else {
                 alert(response.msg)
             }

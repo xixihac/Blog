@@ -6,10 +6,13 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/css/boke.css">
+    <link rel="stylesheet" href="/editor.md/css/editormd.preview.css" />
     <script type="text/javascript" src="/js/jquery-3.4.1.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/js/boke.js" th:inline="javascript"></script>
-
+    <script type="text/javascript" src="/js/boke.js"></script>
+    <script src="/editor.md/editormd.js"></script>
+    <script src="/editor.md/lib/marked.min.js"></script>
+    <script src="/editor.md/lib/prettify.min.js"></script>
 
 </head>
 <body>
@@ -24,7 +27,22 @@
             <span class="text-desc" th:text="'|点赞数:'+${question.likeCount}"></span>
             <span class="text-desc" th:text="'|时间:'+${#dates.format(question.gmtCreate,'yyyy-MM-dd')}"></span>
             <hr>
-            <div>[[${question.description}]]</div>
+
+            <div id="test-markdown-view">
+                <!-- Server-side output Markdown text -->
+                <textarea style="display:none;" th:text="${question.description}">### Hello world!</textarea>
+            </div>
+
+
+            <script type="text/javascript">
+                $(function() {
+                    var testView = editormd.markdownToHTML("test-markdown-view", {
+                        // markdown : "[TOC]\n### Hello world!\n## Heading 2", // Also, you can dynamic set Markdown text
+                        // htmlDecode : true,  // Enable / disable HTML tag encode.
+                        // htmlDecode : "style,script,iframe",  // Note: If enabled, you should filter some dangerous HTML tags for website security.
+                    });
+                });
+            </script>
             <hr>
             <div class="text-desc" th:if="${session.githubUser}"><a th:href="@{/publish/}+${question.id}"
                                                                     th:if="${session.githubUser.id==question.user.id}"><span
@@ -32,8 +50,8 @@
             这里可以加快速回复功能
             <hr>
             <h4><span class="glyphicon glyphicon-tasks"></span> [[${question.commentCount}]]条回复</h4>
-            <hr>
-            <div id="fu" class="media" th:each="comment:${comments}" th:if="${comment.type==0}">
+            <hr id="fu">
+            <div  class="media" th:each="comment:${comments}" th:if="${comment.type==0}">
                 <div class="media-left">
                     <a href="#">
                         <img class="media-object img-rounded" width="40px" th:src="${comment.user.avatarUrl}">
