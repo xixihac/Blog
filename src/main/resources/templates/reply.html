@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/boke.css">
+    <script type="text/javascript" src="/js/jquery-3.4.1.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+<div th:insert="side :: topside"></div>
+<div class="container-fluid main profile">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h2><span class="glyphicon glyphicon-exclamation-sign"
+                      aria-hidden="true"></span>最新回复</h2>
+            <hr>
+
+            <ul class="list-group">
+                <li class="list-group-item" th:if="${replies}" th:each="reply:${replies}" >
+                    <a href="#">[[${reply.senderUser.name}]]</a>
+                    <span th:text="${reply.type==0}?'回复了':'评论了'"></span>
+                    <a href="#">[[${reply.question.title}]]</a>
+                    <span th:text="${reply.type==0}?'':'中你的评论'"></span>
+                </li>
+
+            </ul>
+
+
+        </div>
+
+
+
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <div class="list-group section">
+                <a href="/profile/questions"
+                   class="list-group-item ">我的问题</a>
+                <a href="#" class="list-group-item active">
+                    最新回复
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

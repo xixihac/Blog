@@ -4,7 +4,6 @@ import com.study.boke.Exception.AllException;
 import com.study.boke.dto.CommentDTO;
 import com.study.boke.dto.ResultDTO;
 import com.study.boke.mapper.CommentMapper;
-import com.study.boke.mapper.QuestionMapper;
 import com.study.boke.mapper.UserMapper;
 import com.study.boke.model.Comment;
 import com.study.boke.model.CommentExample;
@@ -28,10 +27,13 @@ public class CommentService {
     @Autowired
     QuestionService questionService;
 
+    @Autowired
+    ReplyService replyService;
+
     public Object insert(CommentDTO commentDTO) {
 
 
-        if (commentDTO.getParentId()==null || questionService.isIdNull(commentDTO.getParentId())){
+        if (commentDTO.getParentId() == null || questionService.isIdNull(commentDTO.getParentId())) {
             return ResultDTO.errorOf(AllException.NOT_FOUND_QUESTION);
         }
 
@@ -48,6 +50,8 @@ public class CommentService {
         questionService.incComment(commentDTO.getParentId());
 
 
+        replyService.insert(comment);
+
         return ResultDTO.successOf();
 
     }
@@ -59,7 +63,7 @@ public class CommentService {
         List<CommentDTO> commentDTOS = new ArrayList<>();
         for (Comment comment : comments) {
             CommentDTO commentDTO = new CommentDTO();
-            BeanUtils.copyProperties(comment,commentDTO);
+            BeanUtils.copyProperties(comment, commentDTO);
             User user = userMapper.selectByPrimaryKey(comment.getCommentator());
             commentDTO.setUser(user);
             commentDTOS.add(commentDTO);

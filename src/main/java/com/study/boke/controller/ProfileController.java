@@ -3,6 +3,7 @@ package com.study.boke.controller;
 import com.study.boke.dto.PaginationDTO;
 import com.study.boke.model.User;
 import com.study.boke.service.QuestionService;
+import com.study.boke.service.ReplyService;
 import com.study.boke.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,9 +23,11 @@ public class ProfileController {
     @Autowired
     QuestionService questionService;
 
+    @Autowired
+    ReplyService replyService;
+
     @GetMapping("/profile/{action}")
     public String profile(Model model,
-                          @PathVariable("action") String action,
                           HttpServletRequest request,
                           @RequestParam(name = "page",defaultValue = "1") Integer page,
                           @RequestParam(name = "size",defaultValue = "5") Integer size) {
@@ -34,18 +37,14 @@ public class ProfileController {
             return "redirect:/";
         }
 
-        if ("questions".equals(action)) {
-            model.addAttribute("section", action);
-            model.addAttribute("sectionName", "我的问题");
             PaginationDTO questionDTOList = questionService.listForId(user.getId(),page,size);
             model.addAttribute("pageId",page);
             model.addAttribute("questions",questionDTOList);
 
-        } else if ("replies".equals(action)) {
-            model.addAttribute("section", action);
-            model.addAttribute("sectionName", "最新回复");
+            Integer count = replyService.countRead(user.getId());
+            model.addAttribute("count",count);
 
-        }
+
 
 
         return "profile";

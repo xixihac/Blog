@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/css/boke.css">
-    <link rel="stylesheet" href="/editor.md/css/editormd.preview.css" />
+    <link rel="stylesheet" href="/editor.md/css/editormd.preview.css"/>
     <script type="text/javascript" src="/js/jquery-3.4.1.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/boke.js"></script>
@@ -35,7 +35,7 @@
 
 
             <script type="text/javascript">
-                $(function() {
+                $(function () {
                     var testView = editormd.markdownToHTML("test-markdown-view", {
                         // markdown : "[TOC]\n### Hello world!\n## Heading 2", // Also, you can dynamic set Markdown text
                         // htmlDecode : true,  // Enable / disable HTML tag encode.
@@ -44,14 +44,17 @@
                 });
             </script>
             <hr>
-            <div class="text-desc" th:if="${session.githubUser}"><a th:href="@{/publish/}+${question.id}"
-                                                                    th:if="${session.githubUser.id==question.user.id}"><span
-                    class="glyphicon glyphicon-pencil" aria-hidden="true"></span>编辑</a></div>
-            这里可以加快速回复功能
+            <div class="text-desc" th:if="${session.githubUser}">
+                <a th:href="@{/publish/}+${question.id}"
+                   th:if="${session.githubUser.id==question.user.id}">
+                <span class="glyphicon glyphicon-pencil question-function" aria-hidden="true"></span>编辑</a>
+                <a href="#reply-square"><span class="glyphicon glyphicon-comment question-function" aria-hidden="true"></span>回复</a>
+
+            </div>
             <hr>
             <h4><span class="glyphicon glyphicon-tasks"></span> [[${question.commentCount}]]条回复</h4>
-            <hr id="fu">
-            <div  class="media" th:each="comment:${comments}" th:if="${comment.type==0}">
+            <hr >
+            <div class="media" th:each="comment:${comments}" th:if="${comment.type==0}">
                 <div class="media-left">
                     <a href="#">
                         <img class="media-object img-rounded" width="40px" th:src="${comment.user.avatarUrl}">
@@ -78,14 +81,17 @@
                             </a>
                             </div>
                             <div class="media-body">
-                                <h4 class="text-desc" >[[${comment2.context}]]</h4>
+                                <h4 class="text-desc">[[${comment2.context}]]</h4>
                             </div>
                     </div>
-                            <textarea name="description" th:id="'context'+${comment.id}" class="form-control comment-reply comment2reply"></textarea>
+                            <textarea name="description" th:id="'context'+${comment.id}"
+                                      class="form-control comment-reply comment2reply"></textarea>
                             <input type="hidden" th:id="'parentId'+${comment.id}" th:value="${question.id}">
-                            <input type="hidden" th:id="'commentator'+${comment.id}" th:value="${session.githubUser.id}">
+                            <input type="hidden" th:id="'commentator'+${comment.id}"
+                                   th:value="${session.githubUser.id}">
                             <input type="hidden" th:id="'type'+${comment.id}" th:value="${comment.id}">
-                            <button type="submit" class="btn btn-success btn-publish" th:data="${comment.id}" onclick="reply2(this)">评论</button>
+                            <button type="submit" class="btn btn-success btn-publish" th:data="${comment.id}"
+                                    onclick="reply2(this)">评论</button>
 
                         </span>
                     </div>
