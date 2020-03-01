@@ -14,7 +14,8 @@ public class CustomerExceptionHandler {
         if (ex instanceof BokeCustomerException){
             model.addAttribute("msg",(((BokeCustomerException) ex).getMsg()));
         }else {
-        model.addAttribute("msg","没准是服务器烧坏了~");
+            ex.printStackTrace();
+            model.addAttribute("msg","没准是服务器烧坏了~");
         }
         return new ModelAndView("error");
 
