@@ -27,9 +27,9 @@ class BokeApplicationTests {
 
     @Test
     void contextLoads() {
-        List<Map<String, Object>> list = jdbcTemplate.queryForList("select * from user");
-        Map<String, Object> map = list.get(0);
-        System.out.println(map);
+//        List<Map<String, Object>> list = jdbcTemplate.queryForList("select * from user");
+//        Map<String, Object> map = list.get(0);
+//        System.out.println(map);
 
     }
 //    @Test
@@ -39,13 +39,13 @@ class BokeApplicationTests {
 //        System.out.println(question.getDescription());
 //    }
 
-    @Test
-    void test(){
-        QuestionExample example = new QuestionExample();
-        example.createCriteria().andIdEqualTo(1);
-        List<Question> questionList = questionMapper.selectByExample(example);
-        Question user =questionList.get(0);
-        System.out.println(user.getDescription());
-    }
+//    @Test
+//    void test(){
+//        QuestionExample example = new QuestionExample();
+//        example.createCriteria().andIdEqualTo(1);
+//        List<Question> questionList = questionMapper.selectByExample(example);
+//        Question user =questionList.get(0);
+//        System.out.println(user.getDescription());
+//    }
 
 }
