@@ -40,11 +40,12 @@ public class UserService {
         UserExample userExample = new UserExample();
         userExample.createCriteria().andAccountIdEqualTo(user.getAccountId());
         List<User> users = userMapper.selectByExample(userExample);
-        User accountIdUser = users.get(0);
-        if (accountIdUser == null) {
+
+        if (users.size()==0) {
             //用户为新用户  添加
             userMapper.insert(user);
         } else {
+            User accountIdUser = users.get(0);
             //用户为老用户 更新
             accountIdUser.setName(user.getName());
             accountIdUser.setAvatarUrl(user.getAvatarUrl());

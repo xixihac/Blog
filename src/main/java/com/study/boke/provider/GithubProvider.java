@@ -50,6 +50,7 @@ public class GithubProvider {
             GithubUser user = JSON.parseObject(string, GithubUser.class);
             return user;
         } catch (IOException e) {
+            e.printStackTrace();
             throw new BokeCustomerException(AllException.GITHUB_CONNECT_FAILD);
         }
     }
