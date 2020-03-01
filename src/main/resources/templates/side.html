@@ -32,7 +32,9 @@
                         <span >登录</span>
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="https://github.com/login/oauth/authorize?client_id=b1af92b9b2cdc49475d5&redirect_uri=http://localhost:8080/callback&scope=user&state=1">GITHUB登录</a></li>
+<!--                        <li><a href="https://github.com/login/oauth/authorize?client_id=b1af92b9b2cdc49475d5&redirect_uri=http://localhost:8080/callback&scope=user&state=1">GITHUB登录</a></li>-->
+
+                        <li><a th:href="@{https://github.com/login/oauth/authorize(client_id='b1af92b9b2cdc49475d5',redirect_uri=${#httpServletRequest.getRequestURL()}+'callback',scope='user',state=1)}">GITHUB登录</a></li>
                         <li><a href="#" onclick="alert('还在开发中~~~QAQ')">其他方式登录</a></li>
                     </ul>
                 </li>
