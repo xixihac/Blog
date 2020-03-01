@@ -47,13 +47,14 @@
             <div class="text-desc" th:if="${session.githubUser}">
                 <a th:href="@{/publish/}+${question.id}"
                    th:if="${session.githubUser.id==question.user.id}">
-                <span class="glyphicon glyphicon-pencil question-function" aria-hidden="true"></span>编辑</a>
-                <a href="#reply-square"><span class="glyphicon glyphicon-comment question-function" aria-hidden="true"></span>回复</a>
+                    <span class="glyphicon glyphicon-pencil question-function" aria-hidden="true"></span>编辑</a>
+                <a href="#reply-square"><span class="glyphicon glyphicon-comment question-function"
+                                              aria-hidden="true"></span>回复</a>
 
             </div>
             <hr>
             <h4><span class="glyphicon glyphicon-tasks"></span> [[${question.commentCount}]]条回复</h4>
-            <hr >
+            <hr>
             <div class="media" th:each="comment:${comments}" th:if="${comment.type==0}">
                 <div class="media-left">
                     <a href="#">
@@ -66,7 +67,10 @@
                     <div class="reply">
                         <span class="glyphicon glyphicon-thumbs-up icon text-desc"></span>
                         <span class="glyphicon glyphicon-comment icon text-desc" th:data="${comment.id}"
-                              onclick="comment_reply(this)"></span>
+                              onclick="comment_reply(this)">
+                                <span th:text="${comment.commentCount}"></span>
+                        </span>
+
                         <span class="text-desc reply-time"
                               th:text="${#dates.format(comment.gmtModified,'yyyy-MM-dd HH:mm:ss')}"></span><br>
 
@@ -84,6 +88,7 @@
                                 <h4 class="text-desc">[[${comment2.context}]]</h4>
                             </div>
                     </div>
+                            <div th:if="${session.githubUser!=null}">
                             <textarea name="description" th:id="'context'+${comment.id}"
                                       class="form-control comment-reply comment2reply"></textarea>
                             <input type="hidden" th:id="'parentId'+${comment.id}" th:value="${question.id}">
@@ -92,6 +97,8 @@
                             <input type="hidden" th:id="'type'+${comment.id}" th:value="${comment.id}">
                             <button type="submit" class="btn btn-success btn-publish" th:data="${comment.id}"
                                     onclick="reply2(this)">评论</button>
+
+                            </div>
 
                         </span>
                     </div>
@@ -144,5 +151,6 @@
 
     </div>
 </div>
+<div th:replace="side::down"></div>
 </body>
 </html>

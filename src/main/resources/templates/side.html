@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <body>
 <nav class="navbar navbar-default" th:fragment="topside">
     <div class="container-fluid">
@@ -15,9 +14,9 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <form class="navbar-form navbar-left">
+            <form class="navbar-form navbar-left" action="/">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
+                    <input type="text" class="form-control" placeholder="Search" name="search">
                 </div>
                 <button type="submit" class="btn btn-default">搜索</button>
             </form>
@@ -34,7 +33,7 @@
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="https://github.com/login/oauth/authorize?client_id=b1af92b9b2cdc49475d5&redirect_uri=http://localhost:8080/callback&scope=user&state=1">GITHUB登录</a></li>
-                        <li><a href="/logout">其他方式登录</a></li>
+                        <li><a href="#" onclick="alert('还在开发中~~~QAQ')">其他方式登录</a></li>
                     </ul>
                 </li>
 
@@ -46,7 +45,7 @@
                         <span th:text="${session.githubUser.getName()}"></span>
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="/profile/questions">我的问题</a></li>
+                        <li><a href="/profile">我的问题</a></li>
                         <li><a href="/logout">退出登录</a></li>
                     </ul>
                 </li>
@@ -69,5 +68,12 @@
     </div>
 </div>
 
+<div th:fragment="down" class="side-bottom">
+
+    <p>©2020 这是一个博客测试 感谢大家的测试支持</p>
+
+
+</div>
+<div th:replace="side::down"></div>
 </body>
 </html>

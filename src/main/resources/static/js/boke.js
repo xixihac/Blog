@@ -82,3 +82,7 @@ function comment_reply(e){
         lock.addClass("in");
     }
 }
+
+function testIng(){
+    alert("还在开发中~~~QAQ");
+}

@@ -28,6 +28,7 @@ public class QuestionController {
     @GetMapping("/question/{id}")
     public String question(Model model,
                            @PathVariable("id")Integer id){
+
         QuestionDTO questionDTO;
 
         try {

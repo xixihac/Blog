@@ -1,6 +1,9 @@
 package com.study.boke.controller;
 
+import com.study.boke.Exception.AllException;
+import com.study.boke.Exception.BokeCustomerException;
 import com.study.boke.dto.PaginationDTO;
+import com.study.boke.dto.ResultDTO;
 import com.study.boke.model.User;
 import com.study.boke.service.QuestionService;
 import com.study.boke.service.ReplyService;
@@ -26,25 +29,22 @@ public class ProfileController {
     @Autowired
     ReplyService replyService;
 
-    @GetMapping("/profile/{action}")
+    @GetMapping("/profile")
     public String profile(Model model,
                           HttpServletRequest request,
-                          @RequestParam(name = "page",defaultValue = "1") Integer page,
-                          @RequestParam(name = "size",defaultValue = "5") Integer size) {
+                          @RequestParam(name = "page", defaultValue = "1") Integer page,
+                          @RequestParam(name = "size", defaultValue = "5") Integer size) {
 
         User user = (User) request.getSession().getAttribute("githubUser");
         if (user == null) {
-            return "redirect:/";
+            throw new BokeCustomerException(AllException.HAVE_NO_LOGIN);
         }
+        PaginationDTO questionDTOList = questionService.listForId(user.getId(), page, size);
+        model.addAttribute("pageId", page);
+        model.addAttribute("questions", questionDTOList);
 
-            PaginationDTO questionDTOList = questionService.listForId(user.getId(),page,size);
-            model.addAttribute("pageId",page);
-            model.addAttribute("questions",questionDTOList);
-
-            Integer count = replyService.countRead(user.getId());
-            model.addAttribute("count",count);
-
-
+        Integer count = replyService.countRead(user.getId());
+        model.addAttribute("count", count);
 
 
         return "profile";

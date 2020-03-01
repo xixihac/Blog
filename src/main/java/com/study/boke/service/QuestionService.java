@@ -31,8 +31,9 @@ public class QuestionService {
     public PaginationDTO list(Integer page, Integer size){
         Integer offset = size*(page-1);
 
-        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(new QuestionExample(), new RowBounds(offset, size));
-
+        QuestionExample questionExample = new QuestionExample();
+        questionExample.setOrderByClause("gmt_create desc");
+        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(questionExample, new RowBounds(offset, size));
         //往QuestionDTO中加User
         List<QuestionDTO> questionDTOList = new ArrayList<>();
         for (Question question : questionList) {
@@ -57,6 +58,7 @@ public class QuestionService {
         Integer offset = size*(page-1);
         QuestionExample questionExample = new QuestionExample();
         questionExample.createCriteria().andCreatorEqualTo(id);
+        questionExample.setOrderByClause("gmt_create desc");
         List<Question> questionList = questionMapper.selectByExampleWithRowbounds(questionExample, new RowBounds(offset, size));
         List<QuestionDTO> questionDTOList = new ArrayList<>();
         for (Question question : questionList) {
@@ -127,5 +129,28 @@ public class QuestionService {
             return true;
         }
         return false;
+    }
+
+    public PaginationDTO listForSearch(Integer page, Integer size, String search) {
+        Integer offset = size*(page-1);
+
+        List<Question> questionList = questionMapperExt.listForSearch(search,offset,size);
+        List<QuestionDTO> questionDTOList = new ArrayList<>();
+        for (Question question : questionList) {
+
+            User user = userMapper.selectByPrimaryKey(question.getCreator());
+            QuestionDTO questionDTO = new QuestionDTO();
+            BeanUtils.copyProperties(question,questionDTO);
+            questionDTO.setUser(user);
+            questionDTOList.add(questionDTO);
+        }
+
+        PaginationDTO paginationDTO = new PaginationDTO();
+        paginationDTO.setQuestionDTOS(questionDTOList);
+
+        Integer totalCount = (int) questionMapperExt.countBySearch(search);
+        paginationDTO.setPagnation(totalCount,page,size);
+
+        return paginationDTO;
     }
 }

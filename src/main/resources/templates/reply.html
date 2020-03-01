@@ -24,7 +24,7 @@
                 <li class="list-group-item" th:if="${replies}" th:each="reply:${replies}" >
                     <a href="#">[[${reply.senderUser.name}]]</a>
                     <span th:text="${reply.type==0}?'回复了':'评论了'"></span>
-                    <a href="#">[[${reply.question.title}]]</a>
+                    <a th:href="@{/question/}+${reply.question.id} ">[[${reply.question.title}]]</a>
                     <span th:text="${reply.type==0}?'':'中你的评论'"></span>
                 </li>
 
@@ -37,7 +37,7 @@
 
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
             <div class="list-group section">
-                <a href="/profile/questions"
+                <a href="/profile"
                    class="list-group-item ">我的问题</a>
                 <a href="#" class="list-group-item active">
                     最新回复
@@ -47,5 +47,6 @@
 
     </div>
 </div>
+<div th:replace="side::down"></div>
 </body>
 </html>

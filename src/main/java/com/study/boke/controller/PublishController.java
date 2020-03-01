@@ -36,7 +36,7 @@ public class PublishController {
         User githubUser = (User) request.getSession().getAttribute("githubUser");
 
         if(githubUser == null){
-            throw new BokeCustomerException(AllException.HAVE_NO_POWER);
+            throw new BokeCustomerException(AllException.HAVE_NO_LOGIN);
         }
         return "publish";
     }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 
 @Controller
 public class HelloController {
@@ -22,14 +23,29 @@ public class HelloController {
 
     @GetMapping("/")
     public String hello(Model model,
+                        @RequestParam(name="search",defaultValue = "") String search,
                         @RequestParam(name = "page", defaultValue = "1") Integer page,
                         @RequestParam(name = "size", defaultValue = "5") Integer size) {
+
+        if(!"".equals(search.trim())){
+
+            PaginationDTO questionDTOList = questionService.listForSearch(page, size,search);
+            if (page>questionDTOList.getTotalPage() || page < 1 ){
+                throw new BokeCustomerException(AllException.HAVE_NO_PAGE);
+            }
+            model.addAttribute("pageId", page);
+            model.addAttribute("questions", questionDTOList);
+            model.addAttribute("searchName",search);
+
+            return "index";
+        }
 
 
         PaginationDTO questionDTOList = questionService.list(page, size);
         if (page>questionDTOList.getTotalPage() || page < 1 ){
             throw new BokeCustomerException(AllException.HAVE_NO_PAGE);
         }
+
         model.addAttribute("pageId", page);
         model.addAttribute("questions", questionDTOList);
 
@@ -40,4 +56,5 @@ public class HelloController {
 
         return "index";
     }
+
 }

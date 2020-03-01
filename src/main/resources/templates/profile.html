@@ -23,25 +23,25 @@
             <nav aria-label="Page navigation" class="page-style">
                 <ul class="pagination">
                     <li th:if="${questions.showFirstPage}">
-                        <a href="/profile/questions?page=1" aria-label="Previous">
+                        <a th:href="@{/profile(page=1)}" aria-label="Previous">
                             <span aria-hidden="true">&lt;&lt;</span>
                         </a>
                     </li>
                     <li th:if="${questions.showPrevious}">
-                        <a th:href="@{/profile/questions(page=${pageId}-1)}" aria-label="Previous">
+                        <a th:href="@{/profile(page=${pageId}-1)}" aria-label="Previous">
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
                     <li th:each="page:${questions.pages}" th:class="${pageId==page}?'active':''">
-                        <a th:href="@{/profile/questions(page=${page})}" name="page" th:text="${page}">1</a>
+                        <a th:href="@{/profile(page=${page})}" name="page" th:text="${page}">1</a>
                     </li>
                     <li th:if="${questions.showNext}">
-                        <a th:href="@{/profile/questions(page=${pageId+1})}" aria-label="Previous">
+                        <a th:href="@{/profile(page=${pageId+1})}" aria-label="Previous">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
                     <li th:if="${questions.showEndPage}">
-                        <a th:href="@{/profile/questions(page=${questions.totalPage})}" aria-label="Next">
+                        <a th:href="@{/profile(page=${questions.totalPage})}" aria-label="Next">
                             <span aria-hidden="true">&gt;&gt;</span>
                         </a>
                     </li>
@@ -61,5 +61,6 @@
 
     </div>
 </div>
+<div th:replace="side::down"></div>
 </body>
 </html>

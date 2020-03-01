@@ -66,6 +66,12 @@ public class CommentService {
             BeanUtils.copyProperties(comment, commentDTO);
             User user = userMapper.selectByPrimaryKey(comment.getCommentator());
             commentDTO.setUser(user);
+
+            CommentExample example1 = new CommentExample();
+            example1.createCriteria().andTypeEqualTo(comment.getId());
+            long count = commentMapper.countByExample(example1);
+            commentDTO.setCommentCount(count);
+
             commentDTOS.add(commentDTO);
         }
         return commentDTOS;

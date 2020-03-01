@@ -19,10 +19,41 @@
             <h2><span class="glyphicon glyphicon-list" aria-hidden="true"></span>发现</h2>
             <hr>
             <div th:replace="side::leftbody"></div>
-            <nav aria-label="Page navigation" class="page-style">
+
+            <!--有问题-->
+            <nav aria-label="Page navigation" class="page-style" th:if="${searchName!=null}" th:value="${searchName}">
                 <ul class="pagination">
                     <li th:if="${questions.showFirstPage}">
-                        <a href="/?page=1" aria-label="Previous">
+                        <a th:href="@{/(search=${searchName},search=${searchName})}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;&lt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${questions.showPrevious}">
+                        <a th:href="@{/(page=${pageId}-1,search=${searchName})}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+                    <li th:each="page:${questions.pages}" th:class="${pageId==page}?'active':''">
+                        <a th:href="@{/(page=${page},search=${searchName})}" name="page" th:text="${page}">1</a>
+                    </li>
+                    <li th:if="${questions.showNext}">
+                        <a th:href="@{/(page=${pageId+1},search=${searchName})}" aria-label="Previous">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${questions.showEndPage}">
+                        <a th:href="@{/(page=${questions.totalPage},search=${searchName})}" aria-label="Next">
+                            <span aria-hidden="true">&gt;&gt;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!--无问题-->
+            <nav aria-label="Page navigation" class="page-style" th:if="${searchName==null}">
+                <ul class="pagination">
+                    <li th:if="${questions.showFirstPage}">
+                        <a th:href="@{/(page=1)}" aria-label="Previous">
                             <span aria-hidden="true">&lt;&lt;</span>
                         </a>
                     </li>
@@ -49,10 +80,11 @@
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" >
             <h3>热门话题</h3>
-            这是热门话题的内容+++++
+            感谢大家的测试支持
         </div>
 
     </div>
 </div>
+<div th:replace="side::down"></div>
 </body>
 </html>
